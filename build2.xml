@@ -1,0 +1,44 @@
+<project name="Teste" default="main" basedir=".">	
+	<property name="source.dir" location="src" />
+	<property name="build.dir" location="bin" />
+	<property name="doc.dir" location="doc" />
+	<property name="jar.dir" location="jar" />
+	
+	<path id="junit.class.path">
+		<pathelement location="/home/aluno/eclipse-workspace/gerencia1agil/GerenciaAgil_1/junit-4.13-beta-3.jar" />
+		<pathelement location="/home/aluno/eclipse-workspace/gerencia1agil/GerenciaAgil_1/hamcrest-core-1.3.jar"/>
+		<pathelement location ="${build.dir}" />
+	</path>
+	
+	<target name="clean" description="tidy up the workspace">
+	<delete dir="${build.dir}" />
+	<delete dir="${doc.dir}" />
+	<delete dir="${jar.dir}" />
+	</target>
+	
+	<target name="init" description="setup project directories">
+	<mkdir dir="${build.dir}" />
+	<mkdir dir="${doc.dir}" />
+	<mkdir dir="${jar.dir}" />
+	</target>
+	
+	<target name="compile" description="compile java sources">
+	<javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="false" >
+		<classpath refid="junit.class.path" />
+		</javac>
+	</target>
+	
+	 <target name="doc" depends="init" description="generate documentation">
+	 	<javadoc sourcepath="${source.dir}" destdir="${doc.dir}">
+	 		<classpath refid="junit.class.path" />
+	 	</javadoc>
+	  </target>
+	  
+	 <target name ="jar">
+	 <jar basedir="${build.dir}" destfile="jar/aplicacao.jar" />
+	 </target>
+		
+	<target name="main" depends="clean, init, compile, doc, jar" >
+	</target>
+	
+</project>
